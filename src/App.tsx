@@ -4,6 +4,7 @@ import type { Expense } from "./types";
 import { signIn, signOut, isSignedIn } from "./lib/googleAuth";
 import { getExpenses, addExpense } from "./lib/sheetsApi";
 import SignInButton from "./components/SignInButton";
+import SignedOutView from "./components/SignedOutView";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseTable from "./components/ExpenseTable";
 import SummaryCharts from "./components/SummaryCharts";
@@ -60,21 +61,19 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <h1>Budget Tracker</h1>
-        <SignInButton
-          signedIn={signedIn}
-          loading={authLoading}
-          onSignIn={handleSignIn}
-          onSignOut={handleSignOut}
-        />
+        {signedIn && (
+          <SignInButton
+            signedIn={signedIn}
+            loading={authLoading}
+            onSignIn={handleSignIn}
+            onSignOut={handleSignOut}
+          />
+        )}
       </header>
 
       {error && <p className="banner banner-error">{error}</p>}
 
-      {!signedIn && (
-        <p className="empty-state">
-          Sign in with Google to load and log expenses from your connected spreadsheet.
-        </p>
-      )}
+      {!signedIn && <SignedOutView loading={authLoading} onSignIn={handleSignIn} />}
 
       {signedIn && (
         <>
