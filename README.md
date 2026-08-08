@@ -40,6 +40,19 @@ npm run dev
 
 Open `http://localhost:5173`, sign in with the Google account you added as a test user, and start adding expenses. Each expense is written directly to your spreadsheet, and the app reads from it to render the table and charts.
 
+## Deployment (GitHub Pages)
+
+The app is deployed at **https://vivianthe.github.io/budget-tracker/** via a GitHub Actions workflow (`.github/workflows/deploy.yml`) that builds and publishes on every push to `main`.
+
+To let someone else use the deployed app:
+
+1. **Add them as a test user** on the OAuth consent screen (Google Cloud Console → APIs & Services → OAuth consent screen → Test users). Without this, they'll be blocked at sign-in since the app is in "Testing" publishing status.
+2. **Share the Google Sheet with them** (Editor access) — the app writes as whichever Google account is signed in, so they need direct permission on the sheet itself.
+
+To redeploy after code changes: push to `main`; the workflow runs automatically. Env vars (`VITE_GOOGLE_CLIENT_ID`, `VITE_SPREADSHEET_ID`) are pulled from the repo's Actions secrets (Settings → Secrets and variables → Actions) at build time, not committed to the repo.
+
+If the OAuth Client ID's authorized origins ever need updating (e.g. redeploying under a different URL), add it under Google Cloud Console → Credentials → your OAuth Client ID → Authorized JavaScript origins. Both `http://localhost:5173` and `https://vivianthe.github.io` should be listed.
+
 ## Notes
 
 - All data stays in your own Google Sheet — there is no separate backend or database.
