@@ -5,12 +5,6 @@ interface Props {
   onSignIn: () => void;
 }
 
-const FEATURES = [
-  "Sortable, filterable expense table",
-  "Spend breakdown by category and month",
-  "Synced straight to your own Google Sheet — no separate database",
-];
-
 export default function SignedOutView({ loading, onSignIn }: Props) {
   return (
     <div className="signed-out-wrap">
@@ -22,11 +16,6 @@ export default function SignedOutView({ loading, onSignIn }: Props) {
         <p className="signed-out-subtitle">
           Sign in with Google to log expenses and see them summarized instantly.
         </p>
-        <ul className="feature-list">
-          {FEATURES.map((f) => (
-            <li key={f}>{f}</li>
-          ))}
-        </ul>
         <SignInButton signedIn={false} loading={loading} onSignIn={onSignIn} onSignOut={() => {}} />
       </div>
     </div>
